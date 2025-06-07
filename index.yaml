@@ -372,3 +372,14 @@ entries:
       url: "https://raw.githubusercontent.com/badtuxx/girus-cli/main/labs/linux_monitoramento-sistema/lab.yaml"
       created: "2024-06-01T10:00:00Z"
       digest: "sha256:d0b045f51c2ae38ec654571cb8d14774ef56843c865167fd4ec1e7506d50e565"
+  helm-test:
+    - name: helm-test
+      version: "1.0.0"
+      description: "Helm"
+      keywords:
+        - helm
+      maintainers:
+        - "Jeferson <jeferson@linuxtips.io>"
+      url: "https://raw.githubusercontent.com/badtuxx/girus-cli/main/labs/linux_monitoramento-sistema/lab.yaml"
+      created: "2024-06-01T10:00:00Z"
+      digest: "sha256:d0b045f51c2ae38ec654571cb8d14774ef56843c865167fd4ec1e7506d50e565"
