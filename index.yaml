@@ -1,5 +1,5 @@
 labs:
-- id: linux-processamento-texto
+- id: helm-lab
   title: Lab de Helm
   description: Domine Helm
   version: 1.0.0
