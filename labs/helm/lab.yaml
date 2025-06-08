@@ -8,67 +8,25 @@ metadata:
 data:
   lab.yaml: |
     name: helm
-    title: "Helm"
-    description: "Utilize ferramentas como vmstat, iostat, free e explore o /proc para obter informações sobre o desempenho do sistema."
-    duration: 20m
-    image: "linuxtips/girus-devops:0.1"
+    title: "Meu lab de test"
+    description: "Lab de helm."
+    duration: 30m
+    timerEnabled: true
+    maxDuration: 45m
+    image: "linuxtips/girus-localstack:0.1"
+    privileged: true
+    type: "test"
+    entrypoint: "/entrypoint.sh"
     tasks:
-      - name: "Verificando Uso de Memória (free, vmstat)"
-        description: "Analise o consumo de memória RAM e Swap."
+      - name: "Desafio 1: Preparar o Ambiente"
+        description: "Prepare o ambiente para o desafio configurando as ferramentas necessárias"
         steps:
-          - "Visualize o uso de memória de forma legível:"
-          - "`free -h`"
-          - "Entenda as colunas: total, used, free, shared, buff/cache, available."
-          - "Use vmstat para ver estatísticas de memória virtual (e outras) a cada 1 segundo, 2 vezes:"
-          - "`vmstat 1 2`"
-          - "Observe as colunas 'si' (swap in) e 'so' (swap out). Valores altos indicam uso excessivo de swap."
+          - "Instale o editor Vim:"
         tips:
           - type: "info"
-            title: "Memória 'Available' vs 'Free'"
-            content: "No Linux moderno, 'available' é uma estimativa mais realista da memória disponível para novas aplicações, pois considera a memória usada para cache que pode ser liberada."
-          - type: "tip"
-            title: "vmstat"
-            content: "'vmstat' (Virtual Memory Statistics) fornece um resumo rápido de processos, memória, swap, I/O, sistema e CPU."
+            title: "Requisitos"
+            content: "Você precisará do Vim e jq para completar este desafio."
         validation:
-          - command: "free -h | grep 'Mem:' &> /dev/null && echo 'ok'"
-            expectedOutput: "ok"
-            errorMessage: "O comando 'free -h' não produziu a saída esperada contendo 'Mem:'."
-
-      - name: "Analisando Atividade de Disco (iostat)"
-        description: "Verifique a utilização e o desempenho dos dispositivos de bloco (discos)."
-        steps:
-          - "Instale o pacote sysstat se necessário (pode já estar na imagem):"
-          - "`sudo apt-get update && sudo apt-get install -y sysstat || echo 'sysstat já instalado'`"
-          - "Visualize estatísticas de I/O para todos os dispositivos (-x), a cada 1 segundo, 2 vezes:"
-          - "`iostat -x 1 2`"
-          - "Observe colunas importantes como: %util (percentual de tempo que o disco esteve ocupado), await (tempo médio de espera por I/O), r/s (leituras por segundo), w/s (escritas por segundo)."
-        tips:
-          - type: "warning"
-            title: "%util Alto"
-            content: "Um %util consistentemente perto de 100% indica que o disco pode ser um gargalo de desempenho."
-        validation:
-          - command: "iostat -x 1 2 | grep 'Device' &> /dev/null && echo 'ok'"
-            expectedOutput: "ok"
-            errorMessage: "O comando 'iostat -x' não produziu a saída esperada contendo 'Device'."
-
-      - name: "Explorando o Sistema de Arquivos /proc"
-        description: "Navegue pelo /proc para obter informações detalhadas sobre o kernel e os processos."
-        steps:
-          - "/proc é um sistema de arquivos virtual que reflete o estado do kernel."
-          - "Visualize informações sobre a CPU:"
-          - "`cat /proc/cpuinfo`"
-          - "Visualize informações sobre a memória:"
-          - "`cat /proc/meminfo`"
-          - "Visualize informações sobre as partições montadas:"
-          - "`cat /proc/mounts`"
-          - "Visualize informações sobre o processo atual (PID $$):"
-          - "`ls -l /proc/$$/`"
-          - "`cat /proc/$$/status`"
-        tips:
-          - type: "info"
-            title: "/proc e Ferramentas"
-            content: "Muitas ferramentas de monitoramento (como ps, top, free) obtêm suas informações lendo arquivos dentro do /proc."
-        validation:
-          - command: "grep 'model name' /proc/cpuinfo &> /dev/null && echo 'ok'"
-            expectedOutput: "ok"
-            errorMessage: "Não foi possível ler informações da CPU em /proc/cpuinfo."
+          - command: "which vim > /dev/null && echo 'success' || echo 'error'"
+            expectedOutput: "success"
+            errorMessage: "O Vim não foi instalado corretamente. Instale-o usando 'apt install -y vim'."
